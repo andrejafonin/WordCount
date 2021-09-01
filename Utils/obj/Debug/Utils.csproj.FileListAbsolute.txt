@@ -1,0 +1,6 @@
+C:\Projects\StringCalculation\WebApplication\Utils\bin\Debug\Utils.dll
+C:\Projects\StringCalculation\WebApplication\Utils\bin\Debug\Utils.pdb
+C:\Projects\StringCalculation\WebApplication\Utils\obj\Debug\Utils.csproj.CoreCompileInputs.cache
+C:\Projects\StringCalculation\WebApplication\Utils\obj\Debug\Utils.dll
+C:\Projects\StringCalculation\WebApplication\Utils\obj\Debug\Utils.pdb
+C:\Projects\StringCalculation\WebApplication\Utils\obj\Debug\Utils.csprojAssemblyReference.cache

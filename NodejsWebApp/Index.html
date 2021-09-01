@@ -1,0 +1,68 @@
+﻿<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="http://localhost:8080/server.js"></script>
+<script src="/server.js"></script>
+<script>
+    var socket = io.connect();
+
+    socket.on('message', function (data) {
+        $('#content').append('</br>' + data.message);
+     });  
+  
+    $(document).ready(function () {
+        $('#send').click(function () {
+
+            var inputValue = document.getElementById('text').value;
+            if (inputValue == "")
+                return;
+            var Input = { sentence : inputValue };            
+
+            $.ajax({
+                type: "POST",                                
+                url: "http://localhost:28448/MyService.svc/CountSimilarWordsAsString",
+                data: JSON.stringify(Input),
+                contentType: "application/json; charset=utf-8", 
+                dataType: "text",                               
+                processdata: true,                              
+                success: function (msg) {        
+                    var parsed = JSON.parse(msg);
+                    if (parsed['d'] != '')
+                        socket.emit('client_data', { 'name': parsed['d'] });
+                },
+                error: function (xhr, status, error) {                                
+                    socket.emit('client_data', { 'name': 'Error calling service' });
+                },
+            });
+                      
+            //$.ajax({
+            //    type: "POST",
+            //    url: "http://localhost:28448/MyService.svc/CountSimilarWordsAsList",
+            //    data: JSON.stringify(Input),
+            //    contentType: "application/json; charset=utf-8", 
+            //    dataType: "json", 
+            //    processdata: true, 
+            //    success: function (msg) {
+            //        var obj = JSON.parse(msg);
+            //        var t = obj.d.length;
+                  
+            //        var outputText="";
+            //        for (var i = 0; i < t; i++) {
+            //            outputText = outputText + "  " + obj.d[i].Name;
+            //        }
+                    
+            //        socket.emit('client_data', { 'name': outputText });                   
+            //    },
+            //    error: function () {
+            //        socket.emit('client_data', { 'name': 'Error calling service' });
+            //    },                 
+            //});
+         })
+    });
+
+</script>
+
+<input id="text" />
+<button id="send">Send</button>
+<div id="content"></div>
